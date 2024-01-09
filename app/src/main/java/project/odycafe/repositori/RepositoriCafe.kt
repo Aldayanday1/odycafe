@@ -1,8 +1,9 @@
 package project.odycafe.repositori
 
-import android.view.Menu
 import kotlinx.coroutines.flow.Flow
+import project.odycafe.data.Menu
 import project.odycafe.data.Pesanan
+
 interface RepositoriMenu {
     suspend fun insertMenu(menu: Menu)
 
@@ -33,3 +34,4 @@ interface RepositoriPesanan {
     fun getPesananStream(id: Int): Flow<Pesanan?>
     fun getAllPesananStream(): Flow<List<Pesanan>>
 }
+
