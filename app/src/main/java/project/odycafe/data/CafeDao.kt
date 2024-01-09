@@ -13,7 +13,8 @@ import kotlinx.coroutines.flow.Flow
 interface MenuDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(menu: Menu)
-    
+
+    // update -> dipakai juga u/ (Upload Img)
     @Update
     suspend fun update(menu: Menu)
 
@@ -35,6 +36,9 @@ interface MenuDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSearchMenu(menu: Menu)
 
+    // Fungsi untuk menyimpan URL gambar
+    @Query("UPDATE tblMenu SET foto = :imageUrl WHERE idmenu = :idmenu")
+    suspend fun updateMenuPhoto(idmenu: Int, imageUrl: String)
 }
 
 

@@ -16,6 +16,7 @@ data class Menu(
     val harga : String,
     val ketersediaan : String,
     val kategori : String,
+    val foto: String
 )
 
 
