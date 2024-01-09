@@ -1,4 +1,4 @@
-package project.odycafe
+package project.odycafe.data
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
