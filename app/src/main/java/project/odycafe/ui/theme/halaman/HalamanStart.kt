@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import project.odycafe.R
+import project.odycafe.navigasi.DestinasiNavigasi
 
 object DestinasiStart : DestinasiNavigasi {
     override val route = "start"
