@@ -39,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import project.odycafe.R
+import project.odycafe.data.Pesanan
 import project.odycafe.model.HomeViewModel
 import project.odycafe.model.PenyediaViewModel
 import project.odycafe.navigasi.CafeTopAppBar
@@ -168,4 +169,12 @@ fun PesananScreen(
             }
         }
     }
+}
+
+@Composable
+fun DataPesanan(
+    pesanan: Pesanan,
+    modifier: Modifier = Modifier
+){
+
 }
