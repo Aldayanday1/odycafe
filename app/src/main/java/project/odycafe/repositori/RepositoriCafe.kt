@@ -19,8 +19,6 @@ interface RepositoriMenu {
     fun searchMenu(query: String): Flow<List<Menu>>
     suspend fun insertSearchMenu(menu: Menu)
 
-    // Save URL Image to Database
-    suspend fun updateMenuPhoto(idmenu: Int, imageUrl: String)
 }
 
 interface RepositoriPesanan {
