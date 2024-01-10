@@ -10,3 +10,11 @@ class DetailsViewModel (
     private val repositoriPesanan: RepositoriPesanan
 
 )
+
+data class ItemDetailsMenuUiState(
+    val detailMenu: DetailMenu = DetailMenu(),
+)
+
+data class ItemDetailsPesananUiState(
+    val detailPesanan: DetailPesanan = DetailPesanan()
+)
