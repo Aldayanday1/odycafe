@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">odycafe</string>
+    <string name="app_name">ody cafe</string>
 
     // MENU
     <string name="idmenu">ID Menu*</string>
@@ -43,8 +43,12 @@
     <string name="nav_pesanan">Pesanan</string>
 
     // TITLE RES
-    <string name="welcome_menu">List Menu</string>
-    <string name="welcome_pesanan">List Pesanan</string>
+    <string name="welcome_menu">Home Menu</string>
+    <string name="welcome_pesanan">Home Pesanan</string>
+
+    // ADD IMAGE
+    <string name="addgallery">Add Photos From Gallery</string>
+    <string name="addcamera">Add Photos From Camera</string>
 
     <string name="title_entry_menu">Entry Menu</string>
     <string name="title_edit_menu">Edit Menu</string>
@@ -65,4 +69,14 @@
     <string name="attention">Perhatian</string>
     <string name="tanya">Apakah anda yakin menghapus ini?</string>
 
+    // BUTTON CLICKED (ADMIN DAN CUSTOMER)
+    <string name="list_menu">List Menu</string>
+    <string name="list_pesanan">List Pesanan</string>
+
+    <string name="log_admim">Log as Admin</string>
+    <string name="log_customer">Log as Customer</string>
+
+    <string name="welcome">Welcome</string>
+    <string name="admim">Admin</string>
+    <string name="customer">Customer</string>
 </resources>
