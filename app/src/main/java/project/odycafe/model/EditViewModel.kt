@@ -24,6 +24,31 @@ class EditViewModel(
     var pesananUiState by mutableStateOf(UIStatePesanan())
         private set
 
+    fun updateUiStateMenu(detailMenu: DetailMenu){
+        menuUiState = UIStateMenu(
+            detailMenu = detailMenu,
+            isEntryValid = validasiInputMenu(detailMenu))
+    }
+    fun updateUiStatePesanan(detailPesanan: DetailPesanan, menuItems: List<Menu>) {
+        pesananUiState = UIStatePesanan(
+            detailPesanan = detailPesanan,
+            isEntryValid = validasiInputPesanan(detailPesanan, menuItems),
+
+            )
+    }
+
+    private fun validasiInputMenu(uiState: DetailMenu = menuUiState.detailMenu): Boolean {
+        return with(uiState) {
+            idmenu != null && menu.isNotBlank() && harga.isNotBlank() && ketersediaan.isNotBlank() && kategori.isNotBlank()
+        }
+    }
+    private fun validasiInputPesanan(uiState: DetailPesanan = pesananUiState.detailPesanan, menuItems: List<Menu>): Boolean {
+        return with(uiState) {
+            idpesanan != 0 && nama.isNotBlank() && detail.isNotBlank() && metode.isNotBlank() && tanggal.isNotBlank()
+                    && menuItems.any { it.menu == idmenuforeignkey }
+        }
+    }
+
     /*--------DROPDOWN--------*/
 
     // Properti untuk daftar menu
