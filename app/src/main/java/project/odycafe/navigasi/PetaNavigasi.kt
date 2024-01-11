@@ -14,12 +14,27 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import project.odycafe.R
+import project.odycafe.ui.halaman.AdminScreen
+import project.odycafe.ui.halaman.CustomerScreen
 import project.odycafe.ui.halaman.DestinasiAdmin
 import project.odycafe.ui.halaman.DestinasiCustomer
+import project.odycafe.ui.halaman.DestinasiListMenu
+import project.odycafe.ui.halaman.DestinasiListPesanan
+import project.odycafe.ui.halaman.DestinasiMenu
+import project.odycafe.ui.halaman.DestinasiMenuEntry
+import project.odycafe.ui.halaman.DestinasiPesanan
 import project.odycafe.ui.halaman.DestinasiStart
+import project.odycafe.ui.halaman.DetailsMenuDestination
+import project.odycafe.ui.halaman.DetailsMenuScreen
+import project.odycafe.ui.halaman.EntryMenuScreen
+import project.odycafe.ui.halaman.ItemEditMenuDestination
+import project.odycafe.ui.halaman.ItemEditMenuScreen
+import project.odycafe.ui.halaman.MenuScreen
 import project.odycafe.ui.halaman.StartScreen
 
 
@@ -70,6 +85,65 @@ fun HostNavigasi(
             StartScreen (
                 onNextButtonAdminClicked = {navController.navigate(DestinasiAdmin.route)},
                 onNextButtonCustomerClicked = {navController.navigate(DestinasiCustomer.route)},
+            )
+        }
+
+        /* ------------- ADMIN & CUST ------------ */
+
+        composable(DestinasiAdmin.route){
+            AdminScreen (
+                onNextButtonMenuClicked = {navController.navigate(DestinasiMenu.route)},
+                onNextButtonPesananListClicked = {navController.navigate(DestinasiListPesanan.route)},
+                navigateBack = { navController.popBackStack()},
+            )
+        }
+        composable(DestinasiCustomer.route){
+            CustomerScreen (
+                onNextButtonPesananClicked = {navController.navigate(DestinasiPesanan.route)},
+                onNextButtonMenuListClicked = {navController.navigate(DestinasiListMenu.route)},
+                navigateBack = { navController.popBackStack()},
+            )
+        }
+
+        /* ------------- NAV MENU ------------ */
+
+        composable(DestinasiMenu.route){
+            MenuScreen(
+                navigateToItemEntry = {navController.navigate(DestinasiMenuEntry.route)},
+                navigateBack = { navController.navigateUp() },
+                navigateToHome = {navController.navigate(DestinasiStart.route)},
+                onDetailClick = {
+                    navController.navigate("${DetailsMenuDestination.route}/$it")
+                },
+            )
+        }
+        composable(DestinasiMenuEntry.route){
+            EntryMenuScreen(
+                navigateBack = { navController.popBackStack()},
+                onNavigateUp = { navController.navigateUp() },
+                modifier = Modifier
+            )
+        }
+        composable(DetailsMenuDestination.routeWithArgs,
+            arguments = listOf(navArgument(DetailsMenuDestination.detailIdArg) {
+                type = NavType.IntType
+            })
+        ) {
+            DetailsMenuScreen(
+                navigateBack = { navController.popBackStack() },
+                navigateToEditItem = {
+                    navController.navigate("${ItemEditMenuDestination.route}/$it")
+                }
+            )
+        }
+        composable(ItemEditMenuDestination.routeWithArgs,
+            arguments = listOf(navArgument(ItemEditMenuDestination.editIdArg) {
+                type = NavType.IntType
+            })
+        ) {
+            ItemEditMenuScreen(
+                navigateBack = { navController.popBackStack() },
+                onNavigateUp = { navController.navigateUp() }
             )
         }
     }
