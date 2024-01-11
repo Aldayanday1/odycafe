@@ -1,5 +1,6 @@
 package project.odycafe.ui.theme.halaman
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,11 +13,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
@@ -37,6 +42,7 @@ import project.odycafe.data.Menu
 import project.odycafe.model.DetailPesanan
 import project.odycafe.model.EntryViewModel
 import project.odycafe.model.PenyediaViewModel
+import project.odycafe.model.UIStatePesanan
 import project.odycafe.navigasi.DestinasiNavigasi
 
 object DestinasiPesananEntry: DestinasiNavigasi {
@@ -54,6 +60,45 @@ fun EntryPesananScreen(
     viewModel: EntryViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
 
+}
+
+@Composable
+fun EntryPesananBody(
+    uiStatePesanan: UIStatePesanan,
+    onPesananValueChange: (DetailPesanan) -> Unit,
+    onSaveClick: () -> Unit,
+    menuItems: List<Menu>,
+    modifier: Modifier = Modifier
+){
+    Column (
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_Large)),
+        modifier = modifier.padding(dimensionResource(id = R.dimen.padding_medium))
+    ){
+        FormInputPesanan(
+            detailPesanan = uiStatePesanan.detailPesanan,
+            onValueChange = onPesananValueChange,
+            modifier = Modifier.fillMaxWidth(),
+            menuItems = menuItems // Menggunakan menuItems dari parameter
+        )
+        OutlinedButton(
+            onClick = onSaveClick,
+            enabled = uiStatePesanan.isEntryValid,
+            modifier = Modifier
+                .width(200.dp)
+                .align(Alignment.CenterHorizontally),
+            border = BorderStroke(0.dp, Color.Transparent),  // Menghapus border
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.DarkGray.copy(alpha = 0.8f),
+                contentColor = Color.DarkGray.copy(alpha = 0.4f)
+            ),
+            shape = MaterialTheme.shapes.small
+        ) {
+            Text(
+                text = stringResource(id = R.string.btn_submit),
+                color = Color.White
+            )
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
