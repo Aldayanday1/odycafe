@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import project.odycafe.repositori.RepositoriMenu
 import project.odycafe.repositori.RepositoriPesanan
-import project.odycafe.ui.theme.halaman.DetailsMenuDestination
+import project.odycafe.ui.halaman.DetailsMenuDestination
 
 class DetailsViewModel (
     savedStateHandle: SavedStateHandle,

@@ -17,6 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import project.odycafe.R
 import project.odycafe.ui.halaman.AdminScreen
@@ -50,6 +51,10 @@ import project.odycafe.ui.halaman.PesananListScreen
 import project.odycafe.ui.halaman.PesananScreen
 import project.odycafe.ui.halaman.StartScreen
 
+@Composable
+fun AplikasiCafe(navController: NavHostController = rememberNavController()){
+    HostNavigasi(navController = navController)
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

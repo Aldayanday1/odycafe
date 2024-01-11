@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 import project.odycafe.data.Menu
 import project.odycafe.repositori.RepositoriMenu
 import project.odycafe.repositori.RepositoriPesanan
-import project.odycafe.ui.theme.halaman.ItemEditMenuDestination
-import project.odycafe.ui.theme.halaman.ItemEditPesananDestination
+import project.odycafe.ui.halaman.ItemEditMenuDestination
+import project.odycafe.ui.halaman.ItemEditPesananDestination
 
 class EditViewModel(
     savedStateHandle: SavedStateHandle,

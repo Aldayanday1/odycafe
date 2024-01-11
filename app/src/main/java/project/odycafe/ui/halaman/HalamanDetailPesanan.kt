@@ -225,7 +225,7 @@ fun ItemPesananDetails(
                 )
             )
             ItemPesananDetailsRow(
-                labelResID = R.string.idmenu1,
+                labelResID = R.string.menu1,
                 itemDetail = pesanan.idMenuForeignKey.toString(),
                 modifier = Modifier.padding(
                     horizontal = dimensionResource(id = R.dimen.padding_medium)

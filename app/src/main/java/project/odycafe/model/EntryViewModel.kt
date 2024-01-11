@@ -114,7 +114,7 @@ class EntryViewModel(
         }
     }
 
-    /*--------SEARCH MENU--------*/
+    /*--------SEARCH PESANAN--------*/
 
     private val _searchResultPesanan = MutableStateFlow<List<Pesanan>>(emptyList())
     val pesananResult: StateFlow<List<Pesanan>> = _searchResultPesanan.asStateFlow()
@@ -153,7 +153,6 @@ class EntryViewModel(
         harga = harga,
         ketersediaan = ketersediaan,
         kategori = kategori,
-        foto = foto
     )
 
     // Fungsi untuk mengubah Menu menjadi UIStateMenu
@@ -169,7 +168,6 @@ class EntryViewModel(
         harga = harga,
         ketersediaan = ketersediaan,
         kategori = kategori,
-        foto = foto
     )
 
     /* ------------- PESANAN ------------ */

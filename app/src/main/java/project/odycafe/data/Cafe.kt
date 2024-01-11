@@ -26,7 +26,8 @@ data class Menu(
         entity = Menu::class,
         parentColumns = ["menu"],
         childColumns = ["idMenuForeignKey"],
-        onDelete = ForeignKey.CASCADE
+        onDelete = ForeignKey.CASCADE,
+        onUpdate = ForeignKey.CASCADE
     )],
     indices = [Index("idMenuForeignKey")] // Menambahkan index untuk idMenuForeignKey
 )
@@ -38,5 +39,5 @@ data class Pesanan(
     val detail : String,
     val metode : String,
     val tanggal : String,
-    val idMenuForeignKey: String // Foreign key reference to idmenu from Menu
+    val idMenuForeignKey: String
 )

@@ -194,7 +194,9 @@ fun FormInputMenu(
                     label = { Text(stringResource(R.string.harga)) },
                     modifier = Modifier.fillMaxWidth(),
                     enabled = enabled,
-                    singleLine = true
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+
                 )
                 OutlinedTextField(
                     value = detailMenu.ketersediaan,
