@@ -1,4 +1,4 @@
-package project.odycafe.ui.theme.halaman
+package project.odycafe.ui.halaman
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -47,34 +47,34 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import project.odycafe.R
-import project.odycafe.data.Menu
+import project.odycafe.data.Pesanan
 import project.odycafe.model.HomeViewModel
 import project.odycafe.model.PenyediaViewModel
 import project.odycafe.navigasi.CafeTopAppBar
 import project.odycafe.navigasi.DestinasiNavigasi
 
-object DestinasiMenu : DestinasiNavigasi{
-    override val route = "menu"
-    override val titleRes = R.string.welcome_menu
+object DestinasiPesanan : DestinasiNavigasi {
+    override val route = "pesanan"
+    override val titleRes = R.string.welcome_pesanan
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MenuScreen(
+fun PesananScreen(
     navigateToItemEntry: () -> Unit,
     onDetailClick: (Int) -> Unit = {},
     navigateBack: () -> Unit,
     navigateToHome: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = PenyediaViewModel.Factory)
-) {
+){
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
-    Scaffold(
+    Scaffold (
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CafeTopAppBar(
-                title = stringResource(DestinasiMenu.titleRes),
+                title = stringResource(DestinasiPesanan.titleRes),
                 canNavigateBack = true,
                 navigateUp = navigateBack,
                 scrollBehavior = scrollBehavior,
@@ -87,7 +87,7 @@ fun MenuScreen(
                     .fillMaxWidth()
                     .padding(top = dimensionResource(id = R.dimen.padding_Large)),
                 horizontalAlignment = Alignment.End
-            ) {
+            ){
                 Row(
                     modifier = Modifier
                         .padding(dimensionResource(id = R.dimen.padding_Large))
@@ -121,18 +121,19 @@ fun MenuScreen(
             }
 
         },
-    ) { innerPadding ->
+    ){
+            innerPadding ->
 
-        val uiStateMenu by viewModel.menuUiState.collectAsState()
+        val uiStatePesanan by viewModel.pesananUiState.collectAsState()
 
-        //------- SEARCH MENU-------/
+        //------- SEARCH PESANAN -------/
         val searchQueryState = remember { mutableStateOf("") }
 
-        // filter = pemfilteran terhadap elemen yg ditampilkan (menu)
+        // filter = pemfilteran terhadap elemen yg ditampilkan (pesanan)
         //ignorecase true = mengabaikan kondisi dari huruf kapital / huruf kecilnya
 
-        val filteredMenu = uiStateMenu.listMenu.filter {
-            it.menu.contains(searchQueryState.value, ignoreCase = true)
+        val filteredPesanan = uiStatePesanan.listPesanan.filter {
+            it.idMenuForeignKey.contains(searchQueryState.value, ignoreCase = true)
         }
 
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
@@ -142,7 +143,6 @@ fun MenuScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.FillBounds,
             )
-
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -157,7 +157,7 @@ fun MenuScreen(
                     OutlinedTextField(
                         value = searchQueryState.value,
                         onValueChange = { searchQueryState.value = it },
-                        label = { Text("Search Menu") },
+                        label = { Text("Search Pesanan") },
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Default.Search,
@@ -174,7 +174,7 @@ fun MenuScreen(
                             )
                     )
                 }
-                if (filteredMenu.isEmpty()) {
+                if (filteredPesanan.isEmpty()) {
                     item {
                         Box(
                             contentAlignment = Alignment.Center,
@@ -187,7 +187,7 @@ fun MenuScreen(
                                 modifier = Modifier
                             ) {
                                 Image(
-                                    painter = painterResource(id = R.drawable.kucingsyedihmenu),
+                                    painter = painterResource(id = R.drawable.kucingsyedihpesanan),
                                     contentDescription = null, // Deskripsi konten, bisa dikosongkan jika tidak diperlukan
                                     modifier = Modifier
                                         .fillMaxSize()
@@ -196,14 +196,15 @@ fun MenuScreen(
                             }
                         }
                     }
-                }  else {
-                    items(filteredMenu) { menu ->
-                        DataMenu(
-                            menu = menu,
+                } else {
+                    items(filteredPesanan) { pesanan ->
+                        DataPesanan(
+                            pesanan = pesanan,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 30.dp)
-                                .clickable { onDetailClick(menu.idmenu) }
+                                // perwakilan atas pemanggilan data (pesanan)
+                                .clickable { onDetailClick(pesanan.idpesanan) }
                         )
                     }
                 }
@@ -212,20 +213,19 @@ fun MenuScreen(
     }
 }
 
-
 @Composable
-fun DataMenu(
-    menu: Menu,
+fun DataPesanan(
+    pesanan: Pesanan,
     modifier: Modifier = Modifier
 ){
-    Card (
+    Card(
         modifier = modifier
-            .padding(bottom = 16.dp)
-            .size(width = 350.dp, height = 255.dp)
+            .padding(dimensionResource(id = R.dimen.padding_small))
+            .size(width = 350.dp, height = 305.dp)
             .alpha(0.8f),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ){
-        Column (
+        Column(
             modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_Large)),
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
         ){
@@ -236,13 +236,13 @@ fun DataMenu(
                 )
                 Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_medium)))
                 Text(
-                    text = stringResource(id = R.string.idmenu1),
+                    text = stringResource(id = R.string.idpesanan1),
                     style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
                 Text(
-                    text = menu.idmenu.toString(),
+                    text = pesanan.idpesanan.toString(),
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.weight(1f)
                 )
@@ -255,13 +255,13 @@ fun DataMenu(
                 )
                 Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_medium)))
                 Text(
-                    text = stringResource(id = R.string.menu1),
+                    text = stringResource(id = R.string.nama1),
                     style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
                 Text(
-                    text = menu.menu,
+                    text = pesanan.nama,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.weight(1f)
                 )
@@ -274,13 +274,13 @@ fun DataMenu(
                 )
                 Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_medium)))
                 Text(
-                    text = stringResource(id = R.string.harga1),
+                    text = stringResource(id = R.string.nav_menu),
                     style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
                 Text(
-                    text = menu.harga,
+                    text = pesanan.idMenuForeignKey.toString(),
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.weight(1f)
                 )
@@ -288,18 +288,18 @@ fun DataMenu(
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
             Row {
                 Icon(
-                    imageVector = Icons.Default.KeyboardArrowRight ,
+                    imageVector = Icons.Default.KeyboardArrowRight,
                     contentDescription = null,
                 )
                 Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_medium)))
                 Text(
-                    text = stringResource(id = R.string.ketersediaan1),
+                    text = stringResource(id = R.string.detail1),
                     style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
                 Text(
-                    text = menu.ketersediaan,
+                    text = pesanan.detail,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.weight(1f)
                 )
@@ -307,22 +307,42 @@ fun DataMenu(
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
             Row {
                 Icon(
-                    imageVector = Icons.Default.KeyboardArrowRight ,
+                    imageVector = Icons.Default.KeyboardArrowRight,
                     contentDescription = null,
                 )
                 Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_medium)))
                 Text(
-                    text = stringResource(id = R.string.kategori1),
+                    text = stringResource(id = R.string.metode1),
                     style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
                 Text(
-                    text = menu.kategori,
+                    text = pesanan.metode,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.weight(1f)
                 )
             }
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
+            Row {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowRight,
+                    contentDescription = null,
+                )
+                Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_medium)))
+                Text(
+                    text = stringResource(id = R.string.tanggal1),
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.weight(1f)
+                )
+                Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
+                Text(
+                    text = pesanan.tanggal,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+
         }
     }
 }

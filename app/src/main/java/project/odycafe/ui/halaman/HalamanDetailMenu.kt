@@ -1,4 +1,4 @@
-package project.odycafe.ui.theme.halaman
+package project.odycafe.ui.halaman
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image

@@ -1,4 +1,4 @@
-package project.odycafe.ui.theme.halaman
+package project.odycafe.ui.halaman
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
