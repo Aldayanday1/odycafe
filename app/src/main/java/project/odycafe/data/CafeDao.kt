@@ -27,14 +27,6 @@ interface MenuDao {
     // mengambil keseluruhan data dari tblMenu, serta mengurutkan alfabetis dari atribut nama dengan menggunakan ascending & descending, dari A-Z & Z-A
     @Query("SELECT * from tblMenu ORDER BY kategori ASC, ketersediaan DESC")
     fun getAllMenu(): Flow<List<Menu>>
-
-//    // Search Menu
-//    @Query("SELECT * FROM tblMenu WHERE menu LIKE '%' || :query || '%'")
-//    fun searchMenu(query: String): Flow<List<Menu>>
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertSearchMenu(menu: Menu)
-    
 }
 
 
