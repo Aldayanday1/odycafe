@@ -1,18 +1,23 @@
 package project.odycafe.ui.theme.halaman
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
@@ -22,27 +27,36 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch
 import project.odycafe.R
 import project.odycafe.data.Menu
 import project.odycafe.model.DetailPesanan
 import project.odycafe.model.EntryViewModel
 import project.odycafe.model.PenyediaViewModel
 import project.odycafe.model.UIStatePesanan
+import project.odycafe.navigasi.CafeTopAppBar
 import project.odycafe.navigasi.DestinasiNavigasi
 
 object DestinasiPesananEntry: DestinasiNavigasi {
@@ -59,7 +73,51 @@ fun EntryPesananScreen(
     modifier: Modifier,
     viewModel: EntryViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
+    val coroutinScope = rememberCoroutineScope()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
+    // Mendapatkan daftar menu dari ViewModel
+    val menuItems by viewModel.menuItems.collectAsState()
+
+    Scaffold (
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CafeTopAppBar(
+                title = stringResource(DestinasiPesananEntry.titleRes),
+                canNavigateBack = true,
+                navigateUp = onNavigateUp,
+                scrollBehavior = scrollBehavior,
+                modifier = Modifier.alpha(0.5f),
+            )
+        }
+    ){ innerPadding ->
+
+        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+            Image(
+                painter = painterResource(id = R.drawable.esteh),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.FillBounds,
+            )
+
+            EntryPesananBody(
+                uiStatePesanan = viewModel.uiStatePesanan,
+                onPesananValueChange = { detailPesanan ->
+                    viewModel.updateUiStatePesanan(detailPesanan, menuItems) },
+                onSaveClick = {
+                    coroutinScope.launch {
+                        viewModel.savePesanan(menuItems)
+                        navigateBack()
+                    }
+                },
+                menuItems = menuItems, // Menggunakan menuItems dari parameter
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .verticalScroll(rememberScrollState())
+                    .fillMaxWidth()
+            )
+        }
+    }
 }
 
 @Composable
