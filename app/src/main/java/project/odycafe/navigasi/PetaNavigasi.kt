@@ -28,16 +28,26 @@ import project.odycafe.ui.halaman.DestinasiListPesanan
 import project.odycafe.ui.halaman.DestinasiMenu
 import project.odycafe.ui.halaman.DestinasiMenuEntry
 import project.odycafe.ui.halaman.DestinasiPesanan
+import project.odycafe.ui.halaman.DestinasiPesananEntry
 import project.odycafe.ui.halaman.DestinasiStart
 import project.odycafe.ui.halaman.DetailsMenuDestination
 import project.odycafe.ui.halaman.DetailsMenuListDestination
 import project.odycafe.ui.halaman.DetailsMenuListScreen
 import project.odycafe.ui.halaman.DetailsMenuScreen
+import project.odycafe.ui.halaman.DetailsPesananDestination
+import project.odycafe.ui.halaman.DetailsPesananListDestination
+import project.odycafe.ui.halaman.DetailsPesananListScreen
+import project.odycafe.ui.halaman.DetailsPesananScreen
 import project.odycafe.ui.halaman.EntryMenuScreen
+import project.odycafe.ui.halaman.EntryPesananScreen
 import project.odycafe.ui.halaman.ItemEditMenuDestination
 import project.odycafe.ui.halaman.ItemEditMenuScreen
+import project.odycafe.ui.halaman.ItemEditPesananDestination
+import project.odycafe.ui.halaman.ItemEditPesananScreen
 import project.odycafe.ui.halaman.MenuListScreen
 import project.odycafe.ui.halaman.MenuScreen
+import project.odycafe.ui.halaman.PesananListScreen
+import project.odycafe.ui.halaman.PesananScreen
 import project.odycafe.ui.halaman.StartScreen
 
 
@@ -168,6 +178,73 @@ fun HostNavigasi(
             })
         ) {
             DetailsMenuListScreen(
+                navigateBack = { navController.popBackStack() },
+            )
+        }
+
+        /* ------------- NAV PESANAN ------------ */
+
+        composable(DestinasiPesanan.route){
+            PesananScreen(
+                navigateToItemEntry = {navController.navigate(DestinasiPesananEntry.route)},
+                navigateBack = { navController.navigateUp() },
+                navigateToHome = {navController.navigate(DestinasiStart.route)},
+                onDetailClick = {
+                    navController.navigate("${DetailsPesananDestination.route}/$it")
+                },
+            )
+        }
+        composable(DestinasiPesananEntry.route){
+            EntryPesananScreen(
+                navigateBack = { navController.popBackStack()},
+                onNavigateUp = { navController.navigateUp() },
+                modifier = Modifier,
+
+                )
+        }
+        composable(
+            DetailsPesananDestination.routeWithArgs,
+            arguments = listOf(navArgument(DetailsPesananDestination.detailIdArg) {
+                type = NavType.IntType
+            })
+        ) {
+            DetailsPesananScreen(
+                navigateBack = { navController.popBackStack() },
+                navigateToEditItem = {
+                    navController.navigate("${ItemEditPesananDestination.route}/$it")
+                }
+            )
+        }
+        composable(
+            ItemEditPesananDestination.routeWithArgs,
+            arguments = listOf(navArgument(ItemEditPesananDestination.editIdArg) {
+                type = NavType.IntType
+            })
+        ) {
+            ItemEditPesananScreen(
+                navigateBack = { navController.popBackStack() },
+                onNavigateUp = { navController.navigateUp() }
+            )
+        }
+
+        /* ------------- LIST PESANAN  ------------ */
+
+        composable(
+            DestinasiListPesanan.route){
+            PesananListScreen(
+                navigateBack = { navController.navigateUp() },
+                onDetailPesananListClick = {
+                    navController.navigate("${DetailsPesananListDestination.route}/$it")
+                },
+            )
+        }
+        composable(
+            DetailsPesananListDestination.routeWithArgs,
+            arguments = listOf(navArgument(DetailsPesananListDestination.detailIdArg) {
+                type = NavType.IntType
+            })
+        ) {
+            DetailsPesananListScreen(
                 navigateBack = { navController.popBackStack() },
             )
         }
