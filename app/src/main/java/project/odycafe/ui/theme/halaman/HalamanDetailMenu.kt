@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.AlertDialog
@@ -13,6 +14,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.dimensionResource
@@ -21,6 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import project.odycafe.R
 import project.odycafe.data.Menu
+import project.odycafe.model.ItemDetailsMenuUiState
+import project.odycafe.model.toMenu
 import project.odycafe.navigasi.DestinasiNavigasi
 
 object DetailsMenuDestination : DestinasiNavigasi {
@@ -29,7 +33,43 @@ object DetailsMenuDestination : DestinasiNavigasi {
     const val detailIdArg = "itemId"
     val routeWithArgs = "$route/{$detailIdArg}"
 }
+@Composable
+private fun ItemMenuDetailBody(
+    itemDetailsMenuUiState: ItemDetailsMenuUiState,
+    onDelete: () -> Unit,
+    deleteConfirmationRequired: Boolean,
+    onDeleteCancel: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.padding(dimensionResource(id = R.dimen.padding_medium)),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium))
+    ) {
+        ItemMenuDetails(
+            menu = itemDetailsMenuUiState.detailMenu.toMenu(),
+            modifier = Modifier.fillMaxWidth()
+        )
 
+        if (deleteConfirmationRequired) {
+            DeleteMenuConfirmationDialog(
+                onDeleteConfirm = {
+                    onDelete()
+                },
+                onDeleteCancel = {
+                    onDeleteCancel() // Panggil onDeleteCancel untuk mereset status
+                },
+                deleteConfirmationRequired = deleteConfirmationRequired,
+                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium))
+            )
+        }
+
+        LaunchedEffect(deleteConfirmationRequired) {
+            if (!deleteConfirmationRequired) {
+                onDeleteCancel()
+            }
+        }
+    }
+}
 @Composable
 fun ItemMenuDetails(
     menu : Menu, modifier: Modifier = Modifier
