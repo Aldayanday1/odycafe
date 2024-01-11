@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavHostController
 import project.odycafe.R
 
 
@@ -48,3 +49,9 @@ fun CafeTopAppBar(
     )
 }
 
+@Composable
+fun HostNavigasi(
+    navController: NavHostController,
+){
+
+}
