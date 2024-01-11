@@ -18,7 +18,7 @@ Selain dari fungsionalitas utamanya yakni ‘CRUD’ terdapat juga beberapa fitu
 Untuk Detail Project, seperti kesesuaian CRUD terhadap fungsionalitas Aplikasi, Pemetaan Pages, Use Case, dan lain sebagainya, akan saya cantumkan dibawah :
 
 ## Use Case
-![odycafe](https://github.com/Aldayanday1/odycafe/assets/91641328/66cab106-d877-4df6-9095-bdfba4680b83)
+![odycafe](https://github.com/Aldayanday1/odycafe/assets/91641328/98f88f6b-0042-4c0e-8bca-333824cdedc3)
 
 
 ## Mekanisme CRUD 
