@@ -28,12 +28,12 @@ interface MenuDao {
     @Query("SELECT * from tblMenu ORDER BY kategori ASC, ketersediaan DESC")
     fun getAllMenu(): Flow<List<Menu>>
 
-    // Search Menu
-    @Query("SELECT * FROM tblMenu WHERE menu LIKE '%' || :query || '%'")
-    fun searchMenu(query: String): Flow<List<Menu>>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSearchMenu(menu: Menu)
+//    // Search Menu
+//    @Query("SELECT * FROM tblMenu WHERE menu LIKE '%' || :query || '%'")
+//    fun searchMenu(query: String): Flow<List<Menu>>
+//
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    suspend fun insertSearchMenu(menu: Menu)
     
 }
 
@@ -52,6 +52,7 @@ interface PesananDao {
 
     @Query("SELECT * from tblPesanan WHERE idpesanan = :idpesanan")
     fun getPesanan(idpesanan: Int): Flow<Pesanan>
+
     @Query("SELECT * from tblPesanan ORDER BY idpesanan ASC")
     fun getAllPesanan(): Flow<List<Pesanan>>
 }

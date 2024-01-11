@@ -22,7 +22,7 @@ class OfflineRepositoriCafe(
 
     override fun getAllMenuStream(): Flow<List<Menu>> = menuDao.getAllMenu()
 
-    // Search Fiture
+    // Search Fiture Menu
     override fun searchMenu(query: String): Flow<List<Menu>> = menuDao.getAllMenu()
 
     override suspend fun insertSearchMenu(menu: Menu) = menuDao.insert(menu)
@@ -36,6 +36,9 @@ class OfflineRepositoriCafe(
 
     override fun getPesananStream(id: Int): Flow<Pesanan?> = pesananDao.getPesanan(id)
 
-
     override fun getAllPesananStream(): Flow<List<Pesanan>> = pesananDao.getAllPesanan()
+
+    // Search Fiture Pesanan
+    override fun searchPesanan(query: String): Flow<List<Pesanan>> = pesananDao.getAllPesanan()
+    override suspend fun insertSearchPesanan(pesanan: Pesanan) = pesananDao.insert(pesanan)
 }
