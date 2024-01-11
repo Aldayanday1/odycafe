@@ -1,11 +1,17 @@
 package project.odycafe.ui.halaman
 
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import project.odycafe.R
 import project.odycafe.navigasi.DestinasiNavigasi
 
@@ -14,6 +20,20 @@ object DetailsPesananDestination : DestinasiNavigasi {
     override val titleRes = R.string.title_detail_pesanan
     const val detailIdArg = "itemId"
     val routeWithArgs = "$route/{$detailIdArg}"
+}
+
+@Composable
+fun ItemPesananDetailsRow(
+    @StringRes labelResID: Int, itemDetail: String, modifier: Modifier = Modifier
+){
+    Row (
+        modifier = modifier
+            .padding(top = 15.dp),
+    ){
+        Text(text = stringResource(labelResID))
+        Spacer(modifier = Modifier.weight(1f))
+        Text(text = itemDetail, fontWeight = FontWeight.Bold)
+    }
 }
 
 @Composable
