@@ -14,7 +14,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import project.odycafe.R
+import project.odycafe.ui.halaman.DestinasiAdmin
+import project.odycafe.ui.halaman.DestinasiCustomer
+import project.odycafe.ui.halaman.DestinasiStart
+import project.odycafe.ui.halaman.StartScreen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,5 +59,18 @@ fun CafeTopAppBar(
 fun HostNavigasi(
     navController: NavHostController,
 ){
+    NavHost(
+        navController = navController,
+        startDestination = DestinasiStart.route,
+        modifier = Modifier
+    ){
+        /* ------------- START ------------ */
 
+        composable(DestinasiStart.route){
+            StartScreen (
+                onNextButtonAdminClicked = {navController.navigate(DestinasiAdmin.route)},
+                onNextButtonCustomerClicked = {navController.navigate(DestinasiCustomer.route)},
+            )
+        }
+    }
 }
