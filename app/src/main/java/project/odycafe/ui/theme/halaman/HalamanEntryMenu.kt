@@ -1,12 +1,17 @@
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -15,22 +20,30 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch
 import project.odycafe.R
 import project.odycafe.model.DetailMenu
 import project.odycafe.model.EntryViewModel
 import project.odycafe.model.PenyediaViewModel
 import project.odycafe.model.UIStateMenu
+import project.odycafe.navigasi.CafeTopAppBar
 import project.odycafe.navigasi.DestinasiNavigasi
 
 object DestinasiMenuEntry: DestinasiNavigasi {
@@ -38,6 +51,7 @@ object DestinasiMenuEntry: DestinasiNavigasi {
     override val titleRes = R.string.title_entry_menu
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EntryMenuScreen(
     onNavigateUp: () -> Unit,
@@ -45,7 +59,47 @@ fun EntryMenuScreen(
     modifier: Modifier,
     viewModel: EntryViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
+    val coroutinScope = rememberCoroutineScope()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
+    Scaffold (
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CafeTopAppBar(
+                title = stringResource(DestinasiMenuEntry.titleRes),
+                canNavigateBack = true,
+                navigateUp = onNavigateUp,
+                scrollBehavior = scrollBehavior,
+                modifier = Modifier.alpha(0.5f)
+            )
+        }
+    ){ innerPadding ->
+
+        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+            Image(
+                painter = painterResource(id = R.drawable.esteh),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.FillBounds,
+            )
+
+            EntryMenuBody(
+                uiStateMenu = viewModel.uiStateMenu,
+                onMenuValueChange = viewModel::updateUiStateMenu,
+                onSaveClick = {
+                    coroutinScope.launch {
+                        viewModel.saveMenu()
+                        navigateBack()
+                    }
+                },
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .verticalScroll(rememberScrollState())
+                    .fillMaxWidth()
+
+            )
+        }
+    }
 }
 
 @Composable
