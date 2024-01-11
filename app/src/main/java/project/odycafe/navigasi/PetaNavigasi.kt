@@ -30,10 +30,13 @@ import project.odycafe.ui.halaman.DestinasiMenuEntry
 import project.odycafe.ui.halaman.DestinasiPesanan
 import project.odycafe.ui.halaman.DestinasiStart
 import project.odycafe.ui.halaman.DetailsMenuDestination
+import project.odycafe.ui.halaman.DetailsMenuListDestination
+import project.odycafe.ui.halaman.DetailsMenuListScreen
 import project.odycafe.ui.halaman.DetailsMenuScreen
 import project.odycafe.ui.halaman.EntryMenuScreen
 import project.odycafe.ui.halaman.ItemEditMenuDestination
 import project.odycafe.ui.halaman.ItemEditMenuScreen
+import project.odycafe.ui.halaman.MenuListScreen
 import project.odycafe.ui.halaman.MenuScreen
 import project.odycafe.ui.halaman.StartScreen
 
@@ -144,6 +147,28 @@ fun HostNavigasi(
             ItemEditMenuScreen(
                 navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() }
+            )
+        }
+
+        /* ------------- LIST MENU ------------ */
+
+        composable(
+            DestinasiListMenu.route){
+            MenuListScreen(
+                navigateBack = { navController.navigateUp() },
+                onDetailMenuListClick = {
+                    navController.navigate("${DetailsMenuListDestination.route}/$it")
+                },
+            )
+        }
+        composable(
+            DetailsMenuListDestination.routeWithArgs,
+            arguments = listOf(navArgument(DetailsMenuListDestination.detailIdArg) {
+                type = NavType.IntType
+            })
+        ) {
+            DetailsMenuListScreen(
+                navigateBack = { navController.popBackStack() },
             )
         }
     }
