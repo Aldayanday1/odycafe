@@ -1,5 +1,3 @@
-
-# Final Project Pengembangan Aplikasi Mobile 2024
 Aplikasi Pemesanan Menu di sebuah Cafe - Ody Cafe
 
 ## Project Description
@@ -64,9 +62,3 @@ Bermula dari saat aplikasi di Running, ‘Halaman Start’ adalah halaman yang m
 Jadi, mekanisme secara singkat nya, ‘Halaman Admin’ ini adalah halaman yang sebetulnya hanya bisa diakses oleh Admin. Karena pemetaan nya mengarah ke ‘Halaman Menu’ yang dimana Admin/Owner dapat membuat Menu, melihat Menu / Mekanisme CRUD lainnya didalamnya, serta selain dari ‘Halaman Menu’, terdapat juga ‘Halaman List Pesanan’, yakni keseluruhan hasil pesanan yang dibuat oleh ‘Customer’ dapat dilihat langsung oleh ‘Admin'. (Read Only, Search), jadi Admin dapat melihat mana saja list Pesanan yang sudah didaftarkan oleh Customer sebelumnya, tanpa bisa mengedit dan menghapusnya.
 
 Selain itu terdapat ‘Halaman Detail’ dari lanjutan di kedua Halaman ‘Menu’ & ‘Pesanan’ yang menjadi tolak ukur pemetaan Halaman untuk Admin & Customer agar dapat melakukan pembaruannya seperti Fitur ‘Edit’ & ‘Delete’.
-
-## Pengerjaan Individual
-
-    Nama    : Mochamad Aldi Raihan Fachrizal
-
-    NIM     : 20210140150
