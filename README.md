@@ -1,5 +1,3 @@
-Aplikasi Pemesanan Menu di sebuah Cafe - Ody Cafe
-
 ## Project Description
 Pada project kali ini, terdapat aplikasi pemesanan menu di sebuah cafe, yakni bernama :
 
